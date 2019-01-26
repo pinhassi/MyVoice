@@ -4,13 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyVoice"
+        xmlns:tools="clr-namespace:MyVoice.Tools"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MyVoice" Height="450" Width="800">
+
+    <Window.Resources>
+        <tools:BooleanToTextValueConverter x:Key="booleanToTextValueConverter"/>
+    </Window.Resources>
+
     <Grid  x:Name="mainLayout">
         <Button x:Name="selectFileBtn" Content="בחר קובץ" HorizontalAlignment="Left" Margin="647,51,0,0" VerticalAlignment="Top" Width="75" Click="SelectFileBtn_Click"/>
         <TextBlock x:Name="selectedFileLabel" Text="{Binding Path=FilePath}" HorizontalAlignment="Left" Margin="140,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="502" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" IsEnabled="False"/>
         <Button x:Name="selectFolderBtn" Content="בחר תיקיה" HorizontalAlignment="Left" Margin="647,76,0,0" VerticalAlignment="Top" Width="75" Click="SelectFolderBtn_Click"/>
         <TextBlock x:Name="selectFolderLabel" Text="{Binding Path=FolderPath}" HorizontalAlignment="Left" Margin="140,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="502" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" IsEnabled="False"/>
+        <ListView x:Name="phrasesListView"  HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Height="100" Margin="140,126,0,0" VerticalAlignment="Top" Width="502" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
+                        <TextBlock Text="טקסט: " />
+                        <TextBlock Text="{Binding Path=Text}" />
+                        <Button Content="Start Recording">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" >
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsRecorded, Converter={StaticResource booleanToTextValueConverter}}" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style> 
+                            </Button.Style>
+                        </Button>
+                        <TextBlock Text="סוף" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="154,332,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
     </Grid>
 </Window>

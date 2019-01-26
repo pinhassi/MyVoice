@@ -2,6 +2,7 @@
 using MyVoice.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace MyVoice
         {
             InitializeComponent();
             mainLayout.DataContext = Controller.Instance;
+            phrasesListView.ItemsSource = Controller.Instance.PhrasesList;
         }
 
         private void SelectFileBtn_Click(object sender, RoutedEventArgs e)
@@ -44,16 +46,11 @@ namespace MyVoice
             {
                 Controller.Instance.FilePath = openFileDialog.FileName;
                 selectedFileLabel.Text = Controller.Instance.FilePath;
-                LoadFile(openFileDialog.FileName);
+                CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
             }
             return;
         }
 
-
-        private void LoadFile(string filename)
-        {
-            return;
-        }
 
         private void SelectFolderBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -64,11 +61,16 @@ namespace MyVoice
                 {
                     Controller.Instance.FolderPath = dialog.SelectedPath;
                     selectFolderLabel.Text = Controller.Instance.FolderPath;
+                    CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
                 }
-
-
-                
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Controller.Instance.PhrasesList.RemoveAt(0);
+            CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
+
         }
     }
 }

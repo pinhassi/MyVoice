@@ -10,9 +10,9 @@ public class Phrase
         this.IsRecorded = isRecorded;
         this.IsInWordsList = isInWordsList;
     }
-    public bool IsRecorded;
-    public bool IsInWordsList;
-    public readonly string Text;
+    public bool IsRecorded { get; set; }
+    public bool IsInWordsList {get; set; }
+    public string Text { get; private set; }
     public override string ToString()
     {
         return Text;
@@ -23,8 +23,9 @@ public class Phrases
 {
     private readonly List<Phrase> mPhrasesList = new List<Phrase>();
     private readonly Dictionary<string, Phrase> mPhrasesDict = new Dictionary<string, Phrase>();
+    private readonly List<Phrase> mPhrasesToShow = new List<Phrase>();
 
-    public void LoadList(string phrasesFile,string soundFilesPath)
+    public void LoadList(string phrasesFile, string soundFilesPath)
     {
         Clear();
         // load words list
@@ -37,10 +38,8 @@ public class Phrases
         foreach (string text in list)
             AddText(text, false);
 
-        foreach (Phrase item in mPhrasesList)
-        {
-            Console.Write(item.ToString());
-        }
+        // copy phrases list to mPhrasesToShow
+        mPhrasesToShow.AddRange(mPhrasesList);
 
         return;
     }
@@ -68,10 +67,19 @@ public class Phrases
         }
     }
 
-    public void Clear()
+    public List<Phrase> List
+        {
+            get
+            {
+                return mPhrasesToShow;
+            }
+        }
+
+    private void Clear()
     {
         this.mPhrasesDict.Clear();
         this.mPhrasesList.Clear();
+        this.mPhrasesToShow.Clear();
     }
 
 }

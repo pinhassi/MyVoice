@@ -68,6 +68,7 @@
     <Compile Include="Model\Controller.cs" />
     <Compile Include="Model\FileManager.cs" />
     <Compile Include="Model\Phrases.cs" />
+    <Compile Include="Model\ValueConverters.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

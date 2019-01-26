@@ -34,9 +34,15 @@ namespace MyVoice.Model
 
         private readonly Phrases mPhrases = new Phrases();
 
+
         private void Init()
         {
             LoadSettings();
+            LoadList();
+        }
+
+        public void LoadList()
+        {
             mPhrases.LoadList(FilePath, FolderPath);
         }
 
@@ -97,5 +103,15 @@ namespace MyVoice.Model
                 mPhrases.LoadList(Settings.FilePath, Settings.FolderPath);
             }
         }
+
+
+        public List<Phrase> PhrasesList
+        {
+            get
+            {
+                return mPhrases.List;
+            }
+        }
+        
     }
 }
