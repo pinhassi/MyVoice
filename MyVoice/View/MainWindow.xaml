@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyVoice"
-        xmlns:tools="clr-namespace:MyVoice.Tools"
+        xmlns:converters="clr-namespace:MyVoice.Converters"
         mc:Ignorable="d"
         Title="MyVoice" Height="450" Width="800">
 
     <Window.Resources>
-        <tools:BooleanToTextValueConverter x:Key="booleanToTextValueConverter"/>
+        <converters:BooleanToTextValueConverter x:Key="booleanToTextValueConverter"/>
     </Window.Resources>
 
     <Grid  x:Name="mainLayout">
@@ -17,12 +17,11 @@
         <TextBlock x:Name="selectedFileLabel" Text="{Binding Path=FilePath}" HorizontalAlignment="Left" Margin="140,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="502" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" IsEnabled="False"/>
         <Button x:Name="selectFolderBtn" Content="בחר תיקיה" HorizontalAlignment="Left" Margin="647,76,0,0" VerticalAlignment="Top" Width="75" Click="SelectFolderBtn_Click"/>
         <TextBlock x:Name="selectFolderLabel" Text="{Binding Path=FolderPath}" HorizontalAlignment="Left" Margin="140,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="502" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" IsEnabled="False"/>
-        <ListView x:Name="phrasesListView"  HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Height="100" Margin="140,126,0,0" VerticalAlignment="Top" Width="502" >
+        <ListView x:Name="phrasesListView" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Height="100" Margin="140,126,0,0" VerticalAlignment="Top" Width="502" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" >
-                        <TextBlock Text="טקסט: " />
-                        <TextBlock Text="{Binding Path=Text}" />
+                    <DockPanel  LastChildFill="True" >
+                        
                         <Button Content="Start Recording">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" >
@@ -35,8 +34,8 @@
                                 </Style> 
                             </Button.Style>
                         </Button>
-                        <TextBlock Text="סוף" />
-                    </StackPanel>
+                        <TextBlock Text="{Binding Path=Text}" HorizontalAlignment="Stretch" TextAlignment="Right" />
+                    </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

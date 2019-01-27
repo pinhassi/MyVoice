@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyVoice.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,22 +7,22 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyVoice.Model
+namespace MyVoice.ViewModel
 {
-    class Controller
+    class MainVM
     {
 
         // singleton stuff
-        private static Controller mInstance;
+        private static MainVM mInstance;
 
-        private Controller() { }
-        public static Controller Instance
+        private MainVM() { }
+        public static MainVM Instance
         {
             get
             {
                 if (mInstance == null)
                 {
-                    mInstance = new Controller();
+                    mInstance = new MainVM();
                     mInstance.Init();
                 }
                 return mInstance;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using MyVoice.Model;
+using MyVoice.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,24 +28,24 @@ namespace MyVoice
         public MainWindow()
         {
             InitializeComponent();
-            mainLayout.DataContext = Controller.Instance;
-            phrasesListView.ItemsSource = Controller.Instance.PhrasesList;
+            mainLayout.DataContext = MainVM.Instance;
+            phrasesListView.ItemsSource = MainVM.Instance.PhrasesList;
         }
 
         private void SelectFileBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Words List Files|*" + "txt";
-            string filePath = Controller.Instance.FilePath;
+            string filePath = MainVM.Instance.FilePath;
             if (filePath != null && filePath.Length > 0)
             {
-                openFileDialog.InitialDirectory = Path.GetDirectoryName(Controller.Instance.FilePath);
-                openFileDialog.FileName = Path.GetFileName(Controller.Instance.FilePath);
+                openFileDialog.InitialDirectory = Path.GetDirectoryName(MainVM.Instance.FilePath);
+                openFileDialog.FileName = Path.GetFileName(MainVM.Instance.FilePath);
             }
             if (openFileDialog.ShowDialog() == true)
             {
-                Controller.Instance.FilePath = openFileDialog.FileName;
-                selectedFileLabel.Text = Controller.Instance.FilePath;
+                MainVM.Instance.FilePath = openFileDialog.FileName;
+                selectedFileLabel.Text = MainVM.Instance.FilePath;
                 CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
             }
             return;
@@ -56,11 +56,11 @@ namespace MyVoice
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
-                dialog.SelectedPath = Controller.Instance.FolderPath;
+                dialog.SelectedPath = MainVM.Instance.FolderPath;
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Controller.Instance.FolderPath = dialog.SelectedPath;
-                    selectFolderLabel.Text = Controller.Instance.FolderPath;
+                    MainVM.Instance.FolderPath = dialog.SelectedPath;
+                    selectFolderLabel.Text = MainVM.Instance.FolderPath;
                     CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
                 }
             }
@@ -68,7 +68,7 @@ namespace MyVoice
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Controller.Instance.PhrasesList.RemoveAt(0);
+            MainVM.Instance.PhrasesList.RemoveAt(0);
             CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
 
         }
