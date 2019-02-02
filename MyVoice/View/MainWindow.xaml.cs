@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using MyVoice.Model;
+using MyVoice.View;
 using MyVoice.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
 
-namespace MyVoice
+namespace MyVoice.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -68,9 +70,39 @@ namespace MyVoice
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainVM.Instance.PhrasesList.RemoveAt(0);
-            CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
-
+            //MainVM.Instance.PhrasesList.RemoveAt(0);
+            //CollectionViewSource.GetDefaultView(phrasesListView.ItemsSource).Refresh();
+            RecWindow recWindow = new RecWindow();
+            recWindow.ShowInTaskbar = false;
+            recWindow.Owner = this;
+            recWindow.ShowDialog();
         }
+
+        private void SelectClickedItemRow(Button sender)
+        {
+            phrasesListView.UnselectAll();
+            ((ListBoxItem)phrasesListView.ItemContainerGenerator.ContainerFromItem(((Button)sender).DataContext)).IsSelected = true;
+        }
+
+        private void RecBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SelectClickedItemRow((Button)sender);
+            var curItem = ((ListBoxItem)phrasesListView.ContainerFromElement((Button)sender)).Content;
+            // TODO: Rec Item
+            return;
+        }
+
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SelectClickedItemRow((Button)sender);
+            Phrase curItem = (Phrase)((ListBoxItem)phrasesListView.ContainerFromElement((Button)sender)).Content;
+            string mp3path = MainVM.Instance.FolderPath + "\\" + curItem.Text + ".mp3";
+            mediaElement.Source = new Uri(mp3path);
+            mediaElement.Play();
+            // TODO: play Item
+            return;
+        }
+
+
     }
 }

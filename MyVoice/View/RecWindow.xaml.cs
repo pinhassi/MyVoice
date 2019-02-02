@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace MyVoice.View
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for RecWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class RecWindow : Window
     {
-        public Window1()
+        public RecWindow()
         {
             InitializeComponent();
         }
