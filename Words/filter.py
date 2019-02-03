@@ -56,24 +56,23 @@ for common_word in common_words_10k:
         if word in out_unsorted: out_unsorted.remove(word)
 
 
-with open('out_contain_numbers_list.txt', mode='w') as the_file:
-    for line in out_contain_numbers_list:
-        the_file.write(line + '\n')
+def writeToFile(words_list, baseFilename, max_num_of_words = 100000):
+    file_index = 1
+    while (file_index-1) * max_num_of_words < len(words_list):
+        filename = '{}_{}.txt'.format(baseFilename,file_index)
+        with open(filename, mode='w') as the_file:
+            start_index = (file_index-1) * max_num_of_words
+            end_index = min((file_index * max_num_of_words),len(words_list))
+            for i in range(start_index,end_index):
+                the_file.write(words_list[i] + '\n')
+        file_index +=1
+ 
+   
+writeToFile(out_contain_numbers_list,'out_contain_numbers_list',3000)   
+writeToFile(out_two_words_list,'out_two_words_list',3000)
+writeToFile(out_sentences_list,'out_sentences_list',3000)
+writeToFile(out_common_words,'out_common_words',3000)
+writeToFile(out_unsorted,'out_unsorted',3000)
 
-with open('out_two_words_list.txt', mode='w') as the_file:
-    for line in out_two_words_list:
-        the_file.write(line + '\n')
-
-with open('out_sentences_list.txt', mode='w') as the_file:
-    for line in out_sentences_list:
-        the_file.write(line + '\n')
-
-with open('out_common_words.txt', mode='w') as the_file:
-    for line in out_common_words:
-        the_file.write(line + '\n')
-
-with open('out_unsorted.txt', mode='w') as the_file:
-    for line in out_unsorted:
-        the_file.write(line + '\n')
 
 print ('total words: {}'.format(len(out_contain_numbers_list) + len(out_two_words_list) + len(out_sentences_list) + len(out_common_words) + len(out_unsorted)))
